@@ -70,7 +70,12 @@ ZSH_THEME="robbyrussell"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git vi-mode tmux)
+plugins=(git vi-mode tmux fzf docker docker-compose)
+
+export FZF_DEFAULT_COMMAND='rg --files --hidden --glob "!{node_modules/*,.git/*,seafile/*,.cache/*}"'
+#export FZF_DEFAULT_COMMAND='rg --files -g !.git -g !node_modules -g !seafile -g !.vscode-server -g !.cache'
+
+export ZSH_TMUX_AUTOSTART=true
 
 source $ZSH/oh-my-zsh.sh
 
@@ -99,5 +104,3 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-alias dc="docker compose"
-export ZSH_TMUX_AUTOSTART=true
