@@ -74,6 +74,10 @@ ZSH_THEME="eastwood"
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(git vi-mode tmux fzf docker docker-compose)
 
+export HISTSIZE=1000000000
+export SAVEHIST=$HISTSIZE
+setopt EXTENDED_HISTORY
+
 export FZF_DEFAULT_COMMAND='rg --files --hidden --glob "!{node_modules/*,.git/*,seafile/*,.cache/*}"'
 #export FZF_DEFAULT_COMMAND='rg --files -g !.git -g !node_modules -g !seafile -g !.vscode-server -g !.cache'
 
