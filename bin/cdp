@@ -1,0 +1,10 @@
+#!/bin/bash
+
+# selected=$(find ~/projects -mindepth 1 -maxdepth 2 -type d | fzf)
+selected=$(find ~/projects -maxdepth 2 -type d | fzf)
+
+if [[ -z $selected ]]; then
+    return
+fi
+
+cd $selected
