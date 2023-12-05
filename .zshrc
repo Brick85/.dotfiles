@@ -73,7 +73,7 @@ ZSH_THEME="eastwood"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git vi-mode tmux fzf docker docker-compose)
+plugins=(git vi-mode tmux fzf docker docker-compose zoxide)
 
 export HISTSIZE=1000000000
 export SAVEHIST=$HISTSIZE
