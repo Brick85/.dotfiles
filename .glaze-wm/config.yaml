@@ -121,132 +121,132 @@ binding_modes:
 keybindings:
   # Shift focus in a given direction.
   - command: "focus left"
-    bindings: ["Alt+H", "Alt+Left"]
+    bindings: ["F24+H", "F24+Left"]
   - command: "focus right"
-    bindings: ["Alt+L", "Alt+Right"]
+    bindings: ["F24+L", "F24+Right"]
   - command: "focus up"
-    bindings: ["Alt+K", "Alt+Up"]
+    bindings: ["F24+K", "F24+Up"]
   - command: "focus down"
-    bindings: ["Alt+J", "Alt+Down"]
+    bindings: ["F24+J", "F24+Down"]
   - command: "move left"
     # Move focused window in a given direction.
 
-    bindings: ["Alt+Shift+H", "Alt+Shift+Left"]
+    bindings: ["F24+Shift+H", "F24+Shift+Left"]
   - command: "move right"
-    bindings: ["Alt+Shift+L", "Alt+Shift+Right"]
+    bindings: ["F24+Shift+L", "F24+Shift+Right"]
   - command: "move up"
-    bindings: ["Alt+Shift+K", "Alt+Shift+Up"]
+    bindings: ["F24+Shift+K", "F24+Shift+Up"]
   - command: "move down"
-    bindings: ["Alt+Shift+J", "Alt+Shift+Down"]
+    bindings: ["F24+Shift+J", "F24+Shift+Down"]
   - command: "resize width -2%"
     # Resize focused window by a percentage or pixel amount.
 
-    binding: "Alt+U"
+    binding: "F24+U"
   - command: "resize width +2%"
-    binding: "Alt+P"
+    binding: "F24+P"
   - command: "resize height +2%"
-    binding: "Alt+O"
+    binding: "F24+O"
   - command: "resize height -2%"
-    binding: "Alt+I"
+    binding: "F24+I"
   - command: "binding mode resize"
     # As an alternative to the resize keybindings above, resize mode enables resizing via
 
     # HJKL or arrow keys. The binding mode is defined above with the name "resize".
-    binding: "Alt+R"
+    binding: "F24+R"
   - command: "tiling direction toggle"
     # Change tiling direction. This determines where new tiling windows will be inserted.
 
-    binding: "Alt+V"
+    binding: "F24+V"
   - command: "focus mode toggle"
     # Change focus between floating / tiling windows.
 
-    binding: "Alt+Space"
+    binding: "F24+Space"
   - command: "toggle floating"
     # Change the focused window to be floating / tiling.
 
-    binding: "Alt+Shift+Space"
+    binding: "F24+Shift+Space"
   - command: "toggle maximized"
     # Change the focused window to be maximized / unmaximized.
 
-    binding: "Alt+X"
+    binding: "F24+X"
   - command: "set minimized"
     # Minimize focused window.
 
-    binding: "Alt+M"
+    binding: "F24+M"
   - command: "close"
     # Close focused window.
 
-    binding: "Alt+Shift+Q"
+    binding: "F24+Shift+Q"
   - command: "exit wm"
     # Kill GlazeWM process safely.
 
-    binding: "Alt+Shift+E"
+    binding: "F24+Shift+E"
   - command: "reload config"
     # Re-evaluate configuration file.
 
-    binding: "Alt+Shift+R"
+    binding: "F24+Shift+R"
   - command: "exec cmd"
     # Launch CMD terminal (alternatively `exec wt` or `exec %ProgramFiles%/Git/git-bash.exe`
 
     # to start Windows Terminal and Git Bash respectively.
-    binding: "Alt+Enter"
+    binding: "F24+Enter"
   - command: "focus workspace recent"
     # Focus the workspace that last had focus.
 
-    binding: "Alt+Y"
+    binding: "F24+Y"
   - command: "focus workspace next"
     # Focus the next/previous workspace defined in `workspaces` config.
 
-    binding: "Alt+T"
+    binding: "F24+T"
   - command: "focus workspace prev"
-    binding: "Alt+Shift+T"
+    binding: "F24+Shift+T"
   - command: "focus workspace 1"
     # Change focus to a workspace defined in `workspaces` config.
 
-    binding: "Alt+1"
+    binding: "F24+1"
   - command: "focus workspace 2"
-    binding: "Alt+2"
+    binding: "F24+2"
   - command: "focus workspace 3"
-    binding: "Alt+3"
+    binding: "F24+3"
   - command: "focus workspace 4"
-    binding: "Alt+4"
+    binding: "F24+4"
   - command: "focus workspace 5"
-    binding: "Alt+5"
+    binding: "F24+5"
   - command: "focus workspace 6"
-    binding: "Alt+6"
+    binding: "F24+6"
   - command: "focus workspace 7"
-    binding: "Alt+7"
+    binding: "F24+7"
   - command: "focus workspace 8"
-    binding: "Alt+8"
+    binding: "F24+8"
   - command: "focus workspace 9"
-    binding: "Alt+9"
+    binding: "F24+9"
   - command: "move workspace left"
     # Move focused workspace to a monitor in a given direction.
 
-    binding: "Alt+A"
+    binding: "F24+A"
   - command: "move workspace right"
-    binding: "Alt+F"
+    binding: "F24+F"
   - command: "move workspace up"
-    binding: "Alt+D"
+    binding: "F24+D"
   - command: "move workspace down"
-    binding: "Alt+S"
+    binding: "F24+S"
   - commands: ["move to workspace 1", "focus workspace 1"]
     # Move focused window to a workspace defined in `workspaces` config.
 
-    binding: "Alt+Shift+1"
+    binding: "F24+Shift+1"
   - commands: ["move to workspace 2", "focus workspace 2"]
-    binding: "Alt+Shift+2"
+    binding: "F24+Shift+2"
   - commands: ["move to workspace 3", "focus workspace 3"]
-    binding: "Alt+Shift+3"
+    binding: "F24+Shift+3"
   - commands: ["move to workspace 4", "focus workspace 4"]
-    binding: "Alt+Shift+4"
+    binding: "F24+Shift+4"
   - commands: ["move to workspace 5", "focus workspace 5"]
-    binding: "Alt+Shift+5"
+    binding: "F24+Shift+5"
   - commands: ["move to workspace 6", "focus workspace 6"]
-    binding: "Alt+Shift+6"
+    binding: "F24+Shift+6"
   - commands: ["move to workspace 7", "focus workspace 7"]
-    binding: "Alt+Shift+7"
+    binding: "F24+Shift+7"
   - commands: ["move to workspace 8", "focus workspace 8"]
-    binding: "Alt+Shift+8"
+    binding: "F24+Shift+8"
   - commands: ["move to workspace 9", "focus workspace 9"]
-    bindings: ["Alt+Shift+9"]
+    bindings: ["F24+Shift+9"]
