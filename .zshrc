@@ -75,6 +75,9 @@ ZSH_THEME="eastwood"
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(git vi-mode tmux fzf docker docker-compose zoxide)
 
+zstyle ':omz:plugins:docker' legacy-completion yes
+zstyle ':completion:*:hosts' hosts off
+
 export HISTSIZE=1000000000
 export SAVEHIST=$HISTSIZE
 setopt EXTENDED_HISTORY
