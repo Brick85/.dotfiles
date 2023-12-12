@@ -73,7 +73,9 @@ ZSH_THEME="eastwood"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git vi-mode tmux fzf docker docker-compose zoxide)
+plugins=(git vi-mode tmux fzf docker docker-compose zoxide zsh-autosuggestions)
+
+# git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
 
 zstyle ':omz:plugins:docker' legacy-completion yes
 zstyle ':completion:*:hosts' hosts off
