@@ -187,7 +187,7 @@ keybindings:
     # Re-evaluate configuration file.
 
     binding: "F13+Shift+R"
-  - command: "exec cmd"
+  - command: "exec wt"
     # Launch CMD terminal (alternatively `exec wt` or `exec %ProgramFiles%/Git/git-bash.exe`
 
     # to start Windows Terminal and Git Bash respectively.
