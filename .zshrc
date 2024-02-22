@@ -80,6 +80,8 @@ plugins=(git vi-mode tmux fzf docker docker-compose zoxide zsh-autosuggestions)
 zstyle ':omz:plugins:docker' legacy-completion yes
 zstyle ':completion:*:hosts' hosts off
 
+unsetopt share_history
+
 export HISTSIZE=1000000000
 export SAVEHIST=$HISTSIZE
 setopt EXTENDED_HISTORY

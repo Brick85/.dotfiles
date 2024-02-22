@@ -96,6 +96,14 @@ window_rules:
     match_process_name: "/heidisql.*/"
   - command: "ignore"
     match_process_name: "/SharpKeys|regedit/"
+  - command: "ignore"
+    match_process_name: "/Photoshop.*/"
+  - command: "ignore"
+    match_process_name: "/Illustrator.*/"
+  - command: "ignore"
+    match_title: "/Autodesk.*/"
+  - command: "ignore"
+    match_process_name: "Creative3D.exe"
   - command: "set floating"
     # Launches system dialogs as floating by default (eg. File Explorer save/open dialog).
 
@@ -104,6 +112,8 @@ window_rules:
     # Some applications (eg. Steam) have borders that extend past the normal border size.
 
     match_process_name: "steam"
+  - command: "resize borders 0px -7px -7px -7px"
+    match_process_name: "alacritty.exe"
 binding_modes:
   - name: "resize"
     keybindings:
