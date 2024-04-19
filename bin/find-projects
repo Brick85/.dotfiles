@@ -1,0 +1,21 @@
+#!/bin/env python3
+import os
+
+
+def main():
+    print("base")
+    projects = os.listdir(os.path.expanduser("~/projects"))
+    for project in projects:
+        project_path = os.path.join(os.path.expanduser("~/projects"), project)
+        subdir = os.path.join(project_path, project)
+        if os.path.isdir(subdir):
+            print(subdir)
+        else:
+            print(project_path)
+    print(os.path.expanduser("~/.config/nvim"))
+
+
+
+if __name__ == "__main__":
+    main()
+

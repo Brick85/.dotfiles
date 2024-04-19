@@ -1,0 +1,158 @@
+#!/bin/env python3
+import os
+import sys
+import json
+
+
+CONFFILE = "qproject.json"
+
+
+def start_docker_compose():
+    os.system('bash -c "docker compose stop"')
+    ret = os.system("docker compose up -d")
+    if os.WEXITSTATUS(ret) != 0:
+        print("docker-compose up failed")
+        sys.exit(1)
+
+
+def create_session(project):
+    ret = os.system(f"tmux has-session -t '{project}' 2>/dev/null")
+    status = os.WEXITSTATUS(ret)
+    if status != 0:
+        os.system(f"tmux new-session -d -s '{project}'")
+
+
+def load_config():
+    conf = {}
+
+    if not os.path.exists(CONFFILE):
+        print(f"Config file {CONFFILE} not found")
+        sys.exit(1)
+
+    with open(CONFFILE, "r") as f:
+        conf = json.load(f)
+
+    return conf
+
+
+def create_zero_window(project):
+    os.system(f"tmux new-window -t {project}:0 -n 'zero'")
+
+
+def kill_zero_window(project):
+    os.system(f"tmux kill-window -t {project}:0")
+
+
+def fill_pane(id, data):
+    os.system(f"tmux select-pane -t {id}")
+    if "container" in data:
+        os.system(f"tmux send-keys -t {id} 'docker compose exec -ti {data['container']} bash' C-m")
+    if "enable_venv" in data and data["enable_venv"]:
+        os.system(f"tmux send-keys -t {id} '. /venv/bin/activate' C-m")
+    if "commands" in data and len(data["commands"]) > 0:
+        for cmd in data["commands"]:
+            os.system(f"tmux send-keys -t {id} '{cmd}' C-m")
+
+
+def kill_window(project, window):
+    window_id = window["id"]
+    win_t = f"{project}:{window_id}"
+    # exists = os.system(f"tmux has-session -t '{win_t}' 2>/dev/null")
+    # if os.WEXITSTATUS(exists) != 0:
+        # return
+    # os.system("tmux list-panes -t %s -F '#{pane_id}' | xargs ps -o tpgid= | xargs -I{} kill -s SIGHUP -{}" % win_t)
+    os.system(f"tmux kill-window -t %s" % win_t)
+
+
+def create_window(project, window):
+    name = window["name"]
+    window_id = window["id"]
+
+    os.system(f"tmux new-window -t {project}:{window_id} -n '{name}'")
+
+    fill_pane(f"{project}:{window_id}.0", window["panes"][0])
+
+    if len(window["panes"]) == 2:
+        os.system(f"tmux split-window -t {project}:{window_id}.0 -h")
+        os.system(f"tmux resize-pane -t {project}:{window_id}.1 -x 50")
+        fill_pane(f"{project}:{window_id}.1", window["panes"][1])
+
+    else:
+        os.system(f"tmux split-window -t {project}:{window_id}.0 -h")
+        os.system(f"tmux resize-pane -t {project}:{window_id}.1 -x 50")
+        fill_pane(f"{project}:{window_id}.1", window["panes"][2])
+
+
+        os.system(f"tmux split-window -t {project}:{window_id}.0 -v")
+        os.system(f"tmux resize-pane -t {project}:{window_id}.1 -y 20")
+        fill_pane(f"{project}:{window_id}.1", window["panes"][1])
+
+        if len(window["panes"]) > 3:
+            current_pane = 2
+            for pane in window["panes"][3:]:
+                os.system(f"tmux split-window -t {project}:{window_id}.{current_pane} -v")
+                current_pane += 1
+                fill_pane(f"{project}:{window_id}.{current_pane}", pane)
+
+    # os.system(f"tmux resize-pane -t {project}:{window_id}.0 -Z")
+    os.system(f"tmux select-pane -t {project}:{window_id}.0")
+    
+
+def main():
+    conf = load_config()
+    start_docker_compose()
+
+    project = conf["project"]
+    create_session(project)
+
+    create_zero_window(project)
+
+    for window in conf["windows"]:
+        kill_window(project, window)
+        create_window(project, window)
+
+    kill_zero_window(project)
+
+    os.system(f"tmux select-window -t {project}:1")
+    os.system(f"tmux select-pane -t {project}:1.0")
+
+    sys.exit(0)
+
+main()
+
+
+
+
+
+
+# #!/bin/sh
+# tmux send-keys -t $session:1 "docker compose exec -ti web bash" C-m
+# tmux send-keys -t $session:1 ". /venv/bin/activate" C-m
+# tmux send-keys -t $session:1 "vim ." C-m
+# tmux split-window -t $session:1 -h
+# tmux resize-pane -t $session:1.1 -x 50
+# tmux send-keys -t $session:1.1 "docker compose exec -ti web bash" C-m
+# tmux send-keys -t $session:1.1 ". /venv/bin/activate" C-m
+# tmux send-keys -t $session:1.1 "./manage.py runserver 0.0.0.0:8000" C-m
+# tmux split-window -t $session:1.1 -v
+# tmux send-keys -t $session:1.2 "docker compose exec -ti web bash" C-m
+# tmux send-keys -t $session:1.2 ". /venv/bin/activate" C-m
+#
+# # tmux new-window -t $session:2 -n 'frontend'
+# # tmux send-keys -t $session:2 "docker compose exec -ti frontend bash" C-m
+# # tmux send-keys -t $session:2 "vim ." C-m
+# # tmux split-window -t $session:2 -h
+# # tmux resize-pane -t $session:2.1 -x 50
+# # tmux send-keys -t $session:2.1 "docker compose exec -ti frontend bash" C-m
+# # tmux send-keys -t $session:2.1 "npm run dev" C-m
+#
+# tmux select-pane -t $session:1.0
+# tmux resize-pane -t $session:1.0 -Z
+#
+# if [ -n "$TMUX" ]; then
+#     echo "swith session"
+#     tmux switch -t $session:1
+# else
+#     echo "attach session"
+#     tmux attach-session -t $session:1
+# fi
