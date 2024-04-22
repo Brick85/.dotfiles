@@ -1,0 +1,4 @@
+#!/usr/bin/env sh
+sudo echo disabled | sudo tee /sys/bus/usb/devices/*/power/wakeup
+
+exec i3lock --nofork --color 000000
