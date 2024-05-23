@@ -36,7 +36,9 @@ def load_config():
 
 
 def create_zero_window(project):
-    os.system(f"tmux new-window -t {project}:0 -n 'zero'")
+    kill_zero_window(project)
+    # os.system(f"tmux new-window -t {project}:0 -n 'zero'")
+    os.system(f"tmux move-window -t {project}:0")
 
 
 def kill_zero_window(project):
@@ -100,12 +102,10 @@ def create_window(project, window):
 
 def main():
     conf = load_config()
-    start_docker_compose()
-
     project = conf["project"]
     create_session(project)
-
     create_zero_window(project)
+    start_docker_compose()
 
     for window in conf["windows"]:
         kill_window(project, window)
