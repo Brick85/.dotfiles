@@ -82,16 +82,17 @@ def create_window(project, window):
     else:
         os.system(f"tmux split-window -t {project}:{window_id}.0 -h")
         os.system(f"tmux resize-pane -t {project}:{window_id}.1 -x 50")
-        fill_pane(f"{project}:{window_id}.1", window["panes"][2])
-
-
-        os.system(f"tmux split-window -t {project}:{window_id}.0 -v")
-        os.system(f"tmux resize-pane -t {project}:{window_id}.1 -y 20")
         fill_pane(f"{project}:{window_id}.1", window["panes"][1])
+        # fill_pane(f"{project}:{window_id}.1", window["panes"][2])
 
-        if len(window["panes"]) > 3:
-            current_pane = 2
-            for pane in window["panes"][3:]:
+
+        # os.system(f"tmux split-window -t {project}:{window_id}.0 -v")
+        # os.system(f"tmux resize-pane -t {project}:{window_id}.1 -y 20")
+        # fill_pane(f"{project}:{window_id}.1", window["panes"][1])
+
+        if len(window["panes"]) > 2:
+            current_pane = 1
+            for pane in window["panes"][2:]:
                 os.system(f"tmux split-window -t {project}:{window_id}.{current_pane} -v")
                 current_pane += 1
                 fill_pane(f"{project}:{window_id}.{current_pane}", pane)
