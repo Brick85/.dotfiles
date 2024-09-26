@@ -1,0 +1,4 @@
+#!/bin/env bash
+export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on'
+/home/vital/ms/TunerStudioMS/TunerStudio.sh
+
