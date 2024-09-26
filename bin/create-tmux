@@ -8,7 +8,7 @@ CONFFILE = "qproject.json"
 
 
 def start_docker_compose():
-    os.system('bash -c "docker compose stop"')
+    # os.system('bash -c "docker compose stop"')
     ret = os.system("docker compose up -d")
     if os.WEXITSTATUS(ret) != 0:
         print("docker-compose up failed")
