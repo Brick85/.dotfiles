@@ -7,11 +7,12 @@ import json
 CONFFILE = "qproject.json"
 
 
-def start_docker_compose():
+def start_docker_compose(docker_cmd):
     # os.system('bash -c "docker compose stop"')
-    ret = os.system("docker compose up -d")
+    ret = os.system("%s up -d" % docker_cmd)
     if os.WEXITSTATUS(ret) != 0:
-        print("docker-compose up failed")
+        print("docker-compose up failed; docker_cmd: %s" % docker_cmd)
+        input("Press Enter to continue...")
         sys.exit(1)
 
 
@@ -45,10 +46,10 @@ def kill_zero_window(project):
     os.system(f"tmux kill-window -t {project}:0")
 
 
-def fill_pane(id, data):
+def fill_pane(id, data, docker_cmd):
     os.system(f"tmux select-pane -t {id}")
     if "container" in data:
-        os.system(f"tmux send-keys -t {id} 'docker compose exec -ti {data['container']} bash' C-m")
+        os.system(f"tmux send-keys -t {id} '{docker_cmd} exec -ti {data['container']} bash' C-m")
     if "enable_venv" in data and data["enable_venv"]:
         os.system(f"tmux send-keys -t {id} '. /venv/bin/activate' C-m")
     if "commands" in data and len(data["commands"]) > 0:
@@ -66,23 +67,23 @@ def kill_window(project, window):
     os.system(f"tmux kill-window -t %s" % win_t)
 
 
-def create_window(project, window):
+def create_window(project, window, docker_cmd):
     name = window["name"]
     window_id = window["id"]
 
     os.system(f"tmux new-window -t {project}:{window_id} -n '{name}'")
 
-    fill_pane(f"{project}:{window_id}.0", window["panes"][0])
+    fill_pane(f"{project}:{window_id}.0", window["panes"][0], docker_cmd)
 
     if len(window["panes"]) == 2:
         os.system(f"tmux split-window -t {project}:{window_id}.0 -h")
         os.system(f"tmux resize-pane -t {project}:{window_id}.1 -x 50")
-        fill_pane(f"{project}:{window_id}.1", window["panes"][1])
+        fill_pane(f"{project}:{window_id}.1", window["panes"][1], docker_cmd)
 
     else:
         os.system(f"tmux split-window -t {project}:{window_id}.0 -h")
         os.system(f"tmux resize-pane -t {project}:{window_id}.1 -x 50")
-        fill_pane(f"{project}:{window_id}.1", window["panes"][1])
+        fill_pane(f"{project}:{window_id}.1", window["panes"][1], docker_cmd)
         # fill_pane(f"{project}:{window_id}.1", window["panes"][2])
 
 
@@ -95,7 +96,7 @@ def create_window(project, window):
             for pane in window["panes"][2:]:
                 os.system(f"tmux split-window -t {project}:{window_id}.{current_pane} -v")
                 current_pane += 1
-                fill_pane(f"{project}:{window_id}.{current_pane}", pane)
+                fill_pane(f"{project}:{window_id}.{current_pane}", pane, docker_cmd)
 
     # os.system(f"tmux resize-pane -t {project}:{window_id}.0 -Z")
     os.system(f"tmux select-pane -t {project}:{window_id}.0")
@@ -106,11 +107,12 @@ def main():
     project = conf["project"]
     create_session(project)
     create_zero_window(project)
-    start_docker_compose()
+    docker_cmd = conf.get("docker_cmd", "docker compose")
+    start_docker_compose(docker_cmd)
 
     for window in conf["windows"]:
         kill_window(project, window)
-        create_window(project, window)
+        create_window(project, window, docker_cmd)
 
     kill_zero_window(project)
 
