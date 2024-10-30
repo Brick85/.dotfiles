@@ -49,7 +49,9 @@ def kill_zero_window(project):
 def fill_pane(id, data, docker_cmd):
     os.system(f"tmux select-pane -t {id}")
     if "container" in data:
-        os.system(f"tmux send-keys -t {id} '{docker_cmd} exec -ti {data['container']} bash' C-m")
+        os.system(
+            f"tmux send-keys -t {id} '{docker_cmd} exec -ti {data['container']} bash' C-m"
+        )
     if "enable_venv" in data and data["enable_venv"]:
         os.system(f"tmux send-keys -t {id} '. /venv/bin/activate' C-m")
     if "commands" in data and len(data["commands"]) > 0:
@@ -62,7 +64,7 @@ def kill_window(project, window):
     win_t = f"{project}:{window_id}"
     # exists = os.system(f"tmux has-session -t '{win_t}' 2>/dev/null")
     # if os.WEXITSTATUS(exists) != 0:
-        # return
+    # return
     # os.system("tmux list-panes -t %s -F '#{pane_id}' | xargs ps -o tpgid= | xargs -I{} kill -s SIGHUP -{}" % win_t)
     os.system(f"tmux kill-window -t %s" % win_t)
 
@@ -86,7 +88,6 @@ def create_window(project, window, docker_cmd):
         fill_pane(f"{project}:{window_id}.1", window["panes"][1], docker_cmd)
         # fill_pane(f"{project}:{window_id}.1", window["panes"][2])
 
-
         # os.system(f"tmux split-window -t {project}:{window_id}.0 -v")
         # os.system(f"tmux resize-pane -t {project}:{window_id}.1 -y 20")
         # fill_pane(f"{project}:{window_id}.1", window["panes"][1])
@@ -94,13 +95,15 @@ def create_window(project, window, docker_cmd):
         if len(window["panes"]) > 2:
             current_pane = 1
             for pane in window["panes"][2:]:
-                os.system(f"tmux split-window -t {project}:{window_id}.{current_pane} -v")
+                os.system(
+                    f"tmux split-window -t {project}:{window_id}.{current_pane} -v"
+                )
                 current_pane += 1
                 fill_pane(f"{project}:{window_id}.{current_pane}", pane, docker_cmd)
 
     # os.system(f"tmux resize-pane -t {project}:{window_id}.0 -Z")
     os.system(f"tmux select-pane -t {project}:{window_id}.0")
-    
+
 
 def main():
     conf = load_config()
@@ -121,11 +124,8 @@ def main():
 
     sys.exit(0)
 
+
 main()
-
-
-
-
 
 
 # #!/bin/sh
