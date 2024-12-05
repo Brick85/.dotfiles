@@ -3,11 +3,11 @@ return {
 		lsp = {
 			"lua_ls",
 			"yamlls",
-			-- "dprint",
+			"dprint",
 		},
 		null = {
 			"stylua",
-			-- "prettier",
+			"prettier",
 		},
 	},
 	enabled = {
