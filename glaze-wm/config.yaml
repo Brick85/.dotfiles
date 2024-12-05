@@ -101,6 +101,8 @@ window_rules:
   - command: "ignore"
     match_process_name: "/Illustrator.*/"
   - command: "ignore"
+    match_process_name: "/Adobe.*/"
+  - command: "ignore"
     match_title: "/Autodesk.*/"
   - command: "ignore"
     match_process_name: "Creative3D.exe"
@@ -133,132 +135,132 @@ binding_modes:
 keybindings:
   # Shift focus in a given direction.
   - command: "focus left"
-    bindings: ["F13+H", "F13+Left"]
+    bindings: ["Alt+H", "Alt+Left"]
   - command: "focus right"
-    bindings: ["F13+L", "F13+Right"]
+    bindings: ["Alt+L", "Alt+Right"]
   - command: "focus up"
-    bindings: ["F13+K", "F13+Up"]
+    bindings: ["Alt+K", "Alt+Up"]
   - command: "focus down"
-    bindings: ["F13+J", "F13+Down"]
+    bindings: ["Alt+J", "Alt+Down"]
   - command: "move left"
     # Move focused window in a given direction.
 
-    bindings: ["F13+Shift+H", "F13+Shift+Left"]
+    bindings: ["Alt+Shift+H", "Alt+Shift+Left"]
   - command: "move right"
-    bindings: ["F13+Shift+L", "F13+Shift+Right"]
+    bindings: ["Alt+Shift+L", "Alt+Shift+Right"]
   - command: "move up"
-    bindings: ["F13+Shift+K", "F13+Shift+Up"]
+    bindings: ["Alt+Shift+K", "Alt+Shift+Up"]
   - command: "move down"
-    bindings: ["F13+Shift+J", "F13+Shift+Down"]
+    bindings: ["Alt+Shift+J", "Alt+Shift+Down"]
   - command: "resize width -2%"
     # Resize focused window by a percentage or pixel amount.
 
-    binding: "F13+U"
+    binding: "Alt+U"
   - command: "resize width +2%"
-    binding: "F13+P"
+    binding: "Alt+P"
   - command: "resize height +2%"
-    binding: "F13+O"
+    binding: "Alt+O"
   - command: "resize height -2%"
-    binding: "F13+I"
+    binding: "Alt+I"
   - command: "binding mode resize"
     # As an alternative to the resize keybindings above, resize mode enables resizing via
 
     # HJKL or arrow keys. The binding mode is defined above with the name "resize".
-    binding: "F13+R"
+    binding: "Alt+R"
   - command: "tiling direction toggle"
     # Change tiling direction. This determines where new tiling windows will be inserted.
 
-    binding: "F13+V"
+    binding: "Alt+V"
   - command: "focus mode toggle"
     # Change focus between floating / tiling windows.
 
-    binding: "F13+Space"
+    binding: "Alt+Space"
   - command: "toggle floating"
     # Change the focused window to be floating / tiling.
 
-    binding: "F13+Shift+Space"
+    binding: "Alt+Shift+Space"
   - command: "toggle maximized"
     # Change the focused window to be maximized / unmaximized.
 
-    binding: "F13+X"
+    binding: "Alt+X"
   - command: "set minimized"
     # Minimize focused window.
 
-    binding: "F13+M"
+    binding: "Alt+M"
   - command: "close"
     # Close focused window.
 
-    binding: "F13+Shift+Q"
+    binding: "Alt+Shift+Q"
   - command: "exit wm"
     # Kill GlazeWM process safely.
 
-    binding: "F13+Shift+E"
+    binding: "Alt+Shift+E"
   - command: "reload config"
     # Re-evaluate configuration file.
 
-    binding: "F13+Shift+R"
+    binding: "Alt+Shift+R"
   - command: "exec wt"
     # Launch CMD terminal (alternatively `exec wt` or `exec %ProgramFiles%/Git/git-bash.exe`
 
     # to start Windows Terminal and Git Bash respectively.
-    binding: "F13+Enter"
+    binding: "Alt+Enter"
   - command: "focus workspace recent"
     # Focus the workspace that last had focus.
 
-    binding: "F13+Y"
+    binding: "Alt+Y"
   - command: "focus workspace next"
     # Focus the next/previous workspace defined in `workspaces` config.
 
-    binding: "F13+T"
+    binding: "Alt+T"
   - command: "focus workspace prev"
-    binding: "F13+Shift+T"
+    binding: "Alt+Shift+T"
   - command: "focus workspace 1"
     # Change focus to a workspace defined in `workspaces` config.
 
-    binding: "F13+1"
+    binding: "Alt+1"
   - command: "focus workspace 2"
-    binding: "F13+2"
+    binding: "Alt+2"
   - command: "focus workspace 3"
-    binding: "F13+3"
+    binding: "Alt+3"
   - command: "focus workspace 4"
-    binding: "F13+4"
+    binding: "Alt+4"
   - command: "focus workspace 5"
-    binding: "F13+5"
+    binding: "Alt+5"
   - command: "focus workspace 6"
-    binding: "F13+6"
+    binding: "Alt+6"
   - command: "focus workspace 7"
-    binding: "F13+7"
+    binding: "Alt+7"
   - command: "focus workspace 8"
-    binding: "F13+8"
+    binding: "Alt+8"
   - command: "focus workspace 9"
-    binding: "F13+9"
+    binding: "Alt+9"
   - command: "move workspace left"
     # Move focused workspace to a monitor in a given direction.
 
-    binding: "F13+A"
+    binding: "Alt+A"
   - command: "move workspace right"
-    binding: "F13+F"
+    binding: "Alt+F"
   - command: "move workspace up"
-    binding: "F13+D"
+    binding: "Alt+D"
   - command: "move workspace down"
-    binding: "F13+S"
+    binding: "Alt+S"
   - commands: ["move to workspace 1", "focus workspace 1"]
     # Move focused window to a workspace defined in `workspaces` config.
 
-    binding: "F13+Shift+1"
+    binding: "Alt+Shift+1"
   - commands: ["move to workspace 2", "focus workspace 2"]
-    binding: "F13+Shift+2"
+    binding: "Alt+Shift+2"
   - commands: ["move to workspace 3", "focus workspace 3"]
-    binding: "F13+Shift+3"
+    binding: "Alt+Shift+3"
   - commands: ["move to workspace 4", "focus workspace 4"]
-    binding: "F13+Shift+4"
+    binding: "Alt+Shift+4"
   - commands: ["move to workspace 5", "focus workspace 5"]
-    binding: "F13+Shift+5"
+    binding: "Alt+Shift+5"
   - commands: ["move to workspace 6", "focus workspace 6"]
-    binding: "F13+Shift+6"
+    binding: "Alt+Shift+6"
   - commands: ["move to workspace 7", "focus workspace 7"]
-    binding: "F13+Shift+7"
+    binding: "Alt+Shift+7"
   - commands: ["move to workspace 8", "focus workspace 8"]
-    binding: "F13+Shift+8"
+    binding: "Alt+Shift+8"
   - commands: ["move to workspace 9", "focus workspace 9"]
-    bindings: ["F13+Shift+9"]
+    bindings: ["Alt+Shift+9"]
