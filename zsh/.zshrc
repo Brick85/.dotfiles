@@ -118,5 +118,3 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-alias cdp="source ~/.dotfiles/bin/cdp"
-source /usr/share/nvm/init-nvm.sh
