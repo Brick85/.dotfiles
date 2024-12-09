@@ -3,3 +3,7 @@
 	name = Vitaliy Belikov
 [init]
 	defaultBranch = main
+[rerere]
+	enabled = true
+[alias]
+	ll = !git --no-pager log --graph --oneline -n 20
