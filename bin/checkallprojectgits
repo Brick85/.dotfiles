@@ -1,0 +1,112 @@
+#!/usr/bin/env bash
+# check-git-clean-and-synced.sh
+# Usage: ./check-git-clean-and-synced.sh [root_dir] [maxdepth]
+# Defaults: root_dir="$HOME/projects", maxdepth=3
+#
+# find ~/projects/ -maxdepth 3 -type d -name ".git"
+
+set -euo pipefail
+
+ROOT="$HOME/projects"
+MAXDEPTH="3"
+
+if ! command -v git >/dev/null 2>&1; then
+  echo "git not found in PATH" >&2
+  exit 127
+fi
+
+# Gather repos
+mapfile -d '' GIT_DIRS < <(find "$ROOT" -maxdepth "$MAXDEPTH" -type d -name ".git" -print0)
+
+
+if ((${#GIT_DIRS[@]}==0)); then
+  echo "No Git repos under $ROOT (maxdepth $MAXDEPTH)."
+  exit 0
+fi
+
+issues=0
+
+for gitdir in "${GIT_DIRS[@]}"; do
+  repo="${gitdir%/.git}"
+  if ! cd "$repo"; then
+    echo "SKIP: cannot enter $repo"
+    continue
+  fi
+
+  # Working tree clean?
+  if [[ -n "$(git status --porcelain)" ]]; then
+     clean=false
+  else
+     clean=true
+  fi
+
+  # Update remotes quietly to get accurate ahead/behind
+  git fetch || true
+
+  # Determine branch and upstream
+
+  branch="$(git symbolic-ref --quiet --short HEAD 2>/dev/null || echo "DETACHED")"
+  upstream=""
+  ahead=""
+  behind=""
+  upstream_set=false
+  synced=false
+  pushed=true
+  pulled=true
+
+  if [[ "$branch" != "DETACHED" ]]; then
+    if upstream_ref="$(git rev-parse --abbrev-ref --symbolic-full-name @{u} 2>/dev/null)"; then
+      upstream="$upstream_ref"
+      upstream_set=true
+      # left=upstream(unique to upstream)=behind, right=head(unique to head)=ahead
+      read -r behind ahead <<< "$(git rev-list --left-right --count "${upstream_ref}...HEAD" 2>/dev/null || echo "0 0")"
+      [[ -z "${behind:-}" ]] && behind=0
+      [[ -z "${ahead:-}"  ]] && ahead=0
+      (( behind == 0 )) || pulled=false
+      (( ahead == 0 )) || pushed=false
+      (( behind == 0 && ahead == 0 )) && synced=true
+    fi
+  fi
+
+  echo "Repo: $repo"
+
+
+  ok=true
+  [[ $clean == true ]] || ok=false
+  if [[ "$upstream_set" == true ]]; then
+    [[ "$pushed" == true && "$pulled" == true ]] || ok=false
+  else
+    ok=false
+  fi
+
+  if [[ $ok == true ]]; then
+    echo "  STATUS: OK ✅"
+  else
+    echo "  STATUS: NOT OK ❌"
+    echo "  Branch: $branch"
+    echo "  Clean working tree: $([[ $clean == true ]] && echo yes || echo no)"
+    if [[ "$upstream_set" == true ]]; then
+
+        echo "  Upstream: $upstream"
+        echo "  Ahead of upstream (needs push): $ahead"
+        echo "  Behind upstream (needs pull):   $behind"
+    else
+        echo "  Upstream: none"
+    fi
+  fi
+  echo
+
+  [[ $ok == true ]] || ((issues++)) || true
+
+  # popd >/dev/null
+done
+
+
+if (( issues == 0 )); then
+  echo "All repositories are clean and fully synchronized with their upstreams."
+  exit 0
+else
+  echo "$issues repository(ies) need attention."
+  exit 1
+fi
+
