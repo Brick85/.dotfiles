@@ -120,3 +120,4 @@ setopt no_share_history
 unsetopt share_history
 
 alias cdp='source cmd_cdp'
+alias ll="ls -la"
